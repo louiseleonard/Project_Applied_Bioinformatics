@@ -44,7 +44,7 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059827.fastq > sample12
 #Align sample 2
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059828.fastq > sample2.sam
 
-#Align sample 3
+#Align sample 3!
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059829.fastq > sample3.sam
 
 #Align sample 4
