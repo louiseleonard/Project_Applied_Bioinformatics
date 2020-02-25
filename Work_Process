@@ -35,38 +35,41 @@ mv reference_sequence.fasta ./data
 #Index the reference genome
 bwa index ./data/reference_sequence.fasta
 
-#Align sample 1!
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059824.fastq > sample1.sam
+#Create folder for samfiles
+mkdir samfiles
 
-#Align sample 10!
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059825.fastq > sample10.sam
+#Align sample 1
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059824.fastq > ./samfiles/sample1.sam
 
-#Align sample 11!
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059826.fastq > sample11.sam
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059825.fastq > ./samfiles/sample10.sam
 
-#Align sample 12!
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059827.fastq > sample12.sam
+#Align sample 11
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059826.fastq > ./samfiles/sample11.sam
+
+#Align sample 12
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059827.fastq > ./samfiles/sample12.sam
 
 #Align sample 2
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059828.fastq > sample2.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059828.fastq > ./samfiles/sample2.sam
 
-#Align sample 3!
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059829.fastq > sample3.sam
+#Align sample 3
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059829.fastq > ./samfiles/sample3.sam
 
 #Align sample 4
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059830.fastq > sample4.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059830.fastq > ./samfiles/sample4.sam
 
 #Align sample 5
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059831.fastq > sample5.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059831.fastq > ./samfiles/sample5.sam
 
 #Align sample 6
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059832.fastq > sample6.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059832.fastq > ./samfiles/sample6.sam
 
-#Align sample 7!
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059833.fastq > sample7.sam
+#Align sample 7
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059833.fastq > ./samfiles/sample7.sam
 
 #Align sample 8
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059834.fastq > sample8.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059834.fastq > ./samfiles/sample8.sam
 
 #Align sample 9
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > sample9.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./samfiles/sample9.sam
