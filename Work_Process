@@ -35,29 +35,29 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059825.fastq
 #Align sample 11
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059826.fastq > sample11.sam
 
-#Align sample 10
+#Align sample 12
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059827.fastq > sample12.sam
 
-#Align sample 10
+#Align sample 2
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059828.fastq > sample2.sam
 
-#Align sample 10
+#Align sample 3
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059829.fastq > sample3.sam
 
-#Align sample 10
+#Align sample 4
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059830.fastq > sample4.sam
 
-#Align sample 10
+#Align sample 5
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059831.fastq > sample5.sam
 
-#Align sample 10
+#Align sample 6
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059832.fastq > sample6.sam
 
-#Align sample 10
+#Align sample 7
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059833.fastq > sample7.sam
 
-#Align sample 10
+#Align sample 8
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059834.fastq > sample8.sam
 
-#Align sample 10
+#Align sample 9
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059835.fastq > sample9.sam
