@@ -11,3 +11,6 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/002/ERR2059832/ERR2059832.fastq.g
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/003/ERR2059833/ERR2059833.fastq.gz #sample7
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/004/ERR2059834/ERR2059834.fastq.gz #sample8
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/005/ERR2059835/ERR2059835.fastq.gz #sample9
+
+#Unzip the files
+gunzip *.fastq.gz
