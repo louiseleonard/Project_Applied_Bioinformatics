@@ -21,5 +21,43 @@ gunzip *.fastq.gz
 # right click on the Download sequences in FASTA format for genome, protein -> genome, copy linkadress
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM19595v2/GCF_000195955.2_ASM19595v2_genomic.fna.gz > reference_sequence.fastq.gz
 
+## Aligning 
+
 #Index the reference genome
 bwa index ./data/reference_sequence.fasta
+
+#Align sample 1
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059824.fastq > sample1.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059825.fastq > sample10.sam
+
+#Align sample 11
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059826.fastq > sample11.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059827.fastq > sample12.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059828.fastq > sample2.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059829.fastq > sample3.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059830.fastq > sample4.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059831.fastq > sample5.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059832.fastq > sample6.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059833.fastq > sample7.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059834.fastq > sample8.sam
+
+#Align sample 10
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059835.fastq > sample9.sam
