@@ -26,10 +26,10 @@ wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM1
 #Index the reference genome
 bwa index ./data/reference_sequence.fasta
 
-#Align sample 1
+#Align sample 1!
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059824.fastq > sample1.sam
 
-#Align sample 10
+#Align sample 10!
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059825.fastq > sample10.sam
 
 #Align sample 11
