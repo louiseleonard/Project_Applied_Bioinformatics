@@ -64,16 +64,3 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059834.fastq > sample8.
 
 #Align sample 9
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > sample9.sam
-
-
-
-hhhhhhhhhhj
-
-HEEJEHJEHWJHHEWHJ
-
-
-
-bdshajbfjkaknfa
-
-
-jiskhsdfdffll
