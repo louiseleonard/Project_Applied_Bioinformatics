@@ -15,6 +15,12 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/005/ERR2059835/ERR2059835.fastq.g
 #Unzip the files
 gunzip *.fastq.gz
 
+# Alternative way to download the files:
+wget https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-5935/E-MTAB-5935.sdrf.txt
+cut -f26 E-MTAB-5935.sdrf.txt > column_with_links.txt
+tail -n +2 column_with_links.txt > links2download.txt
+wget -N -i links2download # Did not run this
+
 mkdir large_data
 mv *.fastq ./large_data
 
