@@ -32,7 +32,7 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059824.fastq
 #Align sample 10!
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059825.fastq > sample10.sam
 
-#Align sample 11
+#Align sample 11!
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835/ERR2059826.fastq > sample11.sam
 
 #Align sample 12
