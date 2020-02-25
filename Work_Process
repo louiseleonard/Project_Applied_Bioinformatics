@@ -21,6 +21,8 @@ cut -f26 E-MTAB-5935.sdrf.txt > column_with_links.txt
 tail -n +2 column_with_links.txt > links2download.txt
 wget -N -i links2download # Did not run this
 
+## TODO: lägg in i rätt mapp
+
 mkdir large_data
 mv *.fastq ./large_data
 
@@ -73,3 +75,8 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059834.fastq > ./samfil
 
 #Align sample 9
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./samfiles/sample9.sam
+
+
+# fast quality control of sample 1
+fastqc ./large_data/ERR2059824.fastq
+
