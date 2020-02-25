@@ -1,0 +1,13 @@
+## Downloading the FASTQ-files from ArrayExpress
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/004/ERR2059824/ERR2059824.fastq.gz #sample1
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/005/ERR2059825/ERR2059825.fastq.gz #sample10
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/006/ERR2059826/ERR2059826.fastq.gz #sample11 
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/007/ERR2059827/ERR2059827.fastq.gz #sample12
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/008/ERR2059828/ERR2059828.fastq.gz #sample2
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/009/ERR2059829/ERR2059829.fastq.gz #sample3
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/000/ERR2059830/ERR2059830.fastq.gz #sample4
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/001/ERR2059831/ERR2059831.fastq.gz #sample5
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/002/ERR2059832/ERR2059832.fastq.gz #sample6
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/003/ERR2059833/ERR2059833.fastq.gz #sample7
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/004/ERR2059834/ERR2059834.fastq.gz #sample8
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/005/ERR2059835/ERR2059835.fastq.gz #sample9
