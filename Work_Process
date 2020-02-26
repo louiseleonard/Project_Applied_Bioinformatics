@@ -88,7 +88,7 @@ mkdir ./large_data/fastqc_files
 # move files to own folder
 mv *_fastqc* ./large_data/fastqc_files
 
-#Convert samfiles into sorted bam files
+#Convert samfiles into sorted bam files and bai files
 cd samfiles
 for file in *.sam; do samtools view -bS $file > ${file/.sam/.bam}; done
 for file in *.bam; do samtools sort $file > ${file/.bam/.sorted.bam}; done
