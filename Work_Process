@@ -79,6 +79,8 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./samfil
 
 # fast quality control of all samples
 for i in {24..35}; do fastqc ./large_data/ERR20598$i.fastq; done
+# could use this instead
+fastqc *.fastq
 
 # make a new directory
 mkdir ./large_data/fastqc_files
