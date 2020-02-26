@@ -80,3 +80,6 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./samfil
 # fast quality control of sample 1
 fastqc ./large_data/ERR2059824.fastq
 
+# The rest of the samples
+for i in {25..35} do fastqc ./large_data/ERR20598i.fastq done
+
