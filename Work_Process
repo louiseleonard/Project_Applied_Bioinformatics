@@ -84,8 +84,7 @@ for i in {24..35}; do fastqc ./large_data/ERR20598$i.fastq; done
 mkdir ./large_data/fastqc_files
 
 # move files to own folder
-for i in {24..35}; do mv ./large_data/ERR20598$i.fastqc.zip fastqc_files; done
-for i in {24..35}; do mv ./large_data/ERR20598$i.fastqc.html fastqc_files; done
+mv *_fastqc* ./large_data/fastqc_files
 
 #Convert samfiles into sorted bam files
 cd samfiles
