@@ -86,7 +86,9 @@ mkdir .data/large-data/fastqc_files
 for i in {24..35}; do mv ./large_data/ERR20598$i.fastqc.zip fastqc_files; done
 for i in {24..35}; do mv ./large_data/ERR20598$i.fastqc.html fastqc_files; done
 
-for file in .\samfiles\*.sam; do samtools view -bS $file > ${file/.sam/.bam}; done
+cd samfiles
+for file in *.sam; do samtools view -bS $file > ${file/.sam/.bam}; done
 
+cd ..
 
 
