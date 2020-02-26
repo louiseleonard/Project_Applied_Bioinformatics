@@ -27,8 +27,9 @@ mv *.fastq ./large_data
 # Download the genome of Mycobacterium tuberculosis from NCBI
 # Get the files from https://www.ncbi.nlm.nih.gov/genome?LinkName=nuccore_genome&from_uid=444893469, 
 # right click on the Download sequences in FASTA format for genome, protein -> genome, copy linkadress
-wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM19595v2/GCF_000195955.2_ASM19595v2_genomic.fna.gz > reference_sequence.fasta.gz
-gunzip reference_sequence.fasta.gz
+wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM19595v2/GCF_000195955.2_ASM19595v2_genomic.fna.gz 
+gunzip GCF_000195955.2_ASM19595v2_genomic.fna.gz
+mv GCF_000195955.2_ASM19595v2_genomic.fna reference_sequence.fasta
 mkdir data
 mv reference_sequence.fasta ./data
 
@@ -80,15 +81,13 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./samfil
 for i in {24..35}; do fastqc ./large_data/ERR20598$i.fastq; done
 
 # make a new directory
-mkdir .data/large-data/fastqc_files
+mkdir ./large_data/fastqc_files
 
 # move files to own folder
 for i in {24..35}; do mv ./large_data/ERR20598$i.fastqc.zip fastqc_files; done
 for i in {24..35}; do mv ./large_data/ERR20598$i.fastqc.html fastqc_files; done
 
-cd samfiles
-for file in *.sam; do samtools view -bS $file > ${file/.sam/.bam}; done
+for file in .\samfiles\*.sam; do samtools view -bS $file > ${file/.sam/.bam}; done
 
-cd ..
 
 
