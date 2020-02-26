@@ -12,16 +12,14 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/003/ERR2059833/ERR2059833.fastq.g
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/004/ERR2059834/ERR2059834.fastq.gz #sample8
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/005/ERR2059835/ERR2059835.fastq.gz #sample9
 
-#Unzip the files
-gunzip *.fastq.gz
-
 # Alternative way to download the files:
 wget https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-5935/E-MTAB-5935.sdrf.txt
 cut -f26 E-MTAB-5935.sdrf.txt > column_with_links.txt
 tail -n +2 column_with_links.txt > links2download.txt
 wget -N -i links2download # Did not run this
 
-## TODO: lägg in i rätt mapp
+#Unzip the files
+gunzip *.fastq.gz
 
 mkdir large_data
 mv *.fastq ./large_data
@@ -30,6 +28,7 @@ mv *.fastq ./large_data
 # Get the files from https://www.ncbi.nlm.nih.gov/genome?LinkName=nuccore_genome&from_uid=444893469, 
 # right click on the Download sequences in FASTA format for genome, protein -> genome, copy linkadress
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM19595v2/GCF_000195955.2_ASM19595v2_genomic.fna.gz > reference_sequence.fastq.gz
+mkdir data
 mv reference_sequence.fasta ./data
 
 ## Aligning 
