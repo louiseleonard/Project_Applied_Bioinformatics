@@ -90,6 +90,6 @@ for i in {24..35}; do mv ./large_data/ERR20598$i.fastqc.html fastqc_files; done
 #Convert samfiles into sorted bam files
 cd samfiles
 for file in *.sam; do samtools view -bS $file > ${file/.sam/.bam}; done
-
+for file in *.bam; do samtools sort $file > ${file/.bam/.sorted.bam}; samtools index genome1.sorted.bam; done
 cd ..
 
