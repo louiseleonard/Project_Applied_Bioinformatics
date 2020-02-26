@@ -76,10 +76,6 @@ bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059834.fastq > ./samfil
 #Align sample 9
 bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./samfiles/sample9.sam
 
-
-# fast quality control of sample 1
-fastqc ./large_data/ERR2059824.fastq
-
-# The rest of the samples
-for i in {25..35} do fastqc ./large_data/ERR20598i.fastq done
+# fast quality control of all samples
+for i in {24..35}; do fastqc ./large_data/ERR20598$i.fastq; done
 
