@@ -95,3 +95,5 @@ for file in *.bam; do samtools sort $file > ${file/.bam/.sorted.bam}; done
 for file in *.sorted.bam do samtools index $file; done
 cd ..
 
+mkdir results
+samtools mpileup -g -f data/reference_sequence.fasta samfiles/sample1.sorted.bam > results/sample1_variants.bcf
