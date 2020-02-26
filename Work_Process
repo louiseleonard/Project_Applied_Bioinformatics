@@ -27,7 +27,8 @@ mv *.fastq ./large_data
 # Download the genome of Mycobacterium tuberculosis from NCBI
 # Get the files from https://www.ncbi.nlm.nih.gov/genome?LinkName=nuccore_genome&from_uid=444893469, 
 # right click on the Download sequences in FASTA format for genome, protein -> genome, copy linkadress
-wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM19595v2/GCF_000195955.2_ASM19595v2_genomic.fna.gz > reference_sequence.fastq.gz
+wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM19595v2/GCF_000195955.2_ASM19595v2_genomic.fna.gz > reference_sequence.fasta.gz
+gunzip reference_sequence.fasta.gz
 mkdir data
 mv reference_sequence.fasta ./data
 
