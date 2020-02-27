@@ -1,3 +1,5 @@
+## For all code below, working directory is assumed to be ~/Project_Applied_Bioinformatics/
+
 ## Downloading the FASTQ-files from ArrayExpress
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/004/ERR2059824/ERR2059824.fastq.gz #sample1
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/005/ERR2059825/ERR2059825.fastq.gz #sample10
@@ -104,6 +106,9 @@ for file in ./results/*_variants.bcf; do bcftools call -c -v $file > ${file/.bcf
 # View .vfd file
 less -S results/sample1_variants.vcf
 
+# Calculate average coverage for all samples
+for i in {1..12}; do samtools depth samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
+
 #Filtering
 
 #Filter reading depth to maximum 400
@@ -132,6 +137,3 @@ tail -n +32 sample5_variants.vcf |sort -n -k 6 > sorted_qualityscore_vcf/sample5
 
 # keep headline, and choose the ones with quality score >10
 awk -F"\t" 'NR==1||$6>10' sample1_variants.vcf.sortedqs
-
-# Calculate average coverage for all samples
-for i in {1..12}; do samtools depth samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
