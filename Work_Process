@@ -109,6 +109,7 @@ cd results
 for file in *_variants.vcf; do cut -f 2 $file | sort > ./snp_positions/${file/_variants.vcf/_snp_pos}; done
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
+for file in *_snp_pos; do if [ $file != sample1_snp_pos ]; then comm -23 $file sample1_snp_pos > ${file/_snp_pos/_unique_snp_pos}; fi; done
 cd ..
 
 # sort with the quality score, start from line just above the numbers,  
