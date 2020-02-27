@@ -115,5 +115,5 @@ cd ..
 # sort with the quality score, start from line just above the numbers,  
 tail -n +32 sample5_variants.vcf |sort -n -k 6 > sorted_qualityscore_vcf/sample5_variants.vcf.sortedqs
 
-# keep headline, and choose the ones with quality score  20<qs<400.
-awk -F"\t" 'NR==1||$6>20 &&$6<400' sample1_variants.vcf.sortedqs
+# keep headline, and choose the ones with quality score >10
+awk -F"\t" 'NR==1||$6>10' sample1_variants.vcf.sortedqs
