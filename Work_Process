@@ -106,7 +106,7 @@ less -S results/sample1_variants.vcf
 
 #Filtering
 #Filter reading depth to maximum 400
-for file in /results/*.sorted.bam samtools depth $file | awk '$3<400' | cut -f 2 > ${file/.filtered.positions
+for file in /results/*.sorted.bam samtools depth $file | awk '$3<400' | cut -f 2 > ${file/.filtered.positions}; done
 
 #Extract positions for snps
 cd results
