@@ -134,7 +134,7 @@ for i in {1..12};sort -n -k 2 sample$i.variants.removedqs > sample$i.variants.re
 tail -n +2 sample1.variants.removedqs.sorted | cut -f 2 > sample1.variants.IDs
 
 # we sorted wrong way in previous step, do a new sort to be able to compare the files. 
-comm -12 <(sort filtering/sample1.filtered.positions) <(sort sorted_qualityscore_vcf/sample1.variants.IDs) | less -S
+comm -12 <(sort filtering/sample1.filtered.positions) <(sort sorted_qualityscore_vcf/sample1.variants.IDs) > sample1.finals.IDs
 
 
 
