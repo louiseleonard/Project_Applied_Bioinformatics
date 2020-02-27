@@ -108,7 +108,7 @@ less -S results/sample1_variants.vcf
 
 #Filter reading depth to maximum 400
 for file in ./samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cut -f 2 > ${file/.sorted.bam/.filtered.positions}; done
-mkdir ../results/filtering
+mkdir ./results/filtering
 mv *.filtered.positions ./results/filtering
 
 #Filter quality to minimum 10
