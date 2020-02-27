@@ -142,10 +142,15 @@ for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i* > sample$i.variants.rem
 for i in {1..12};sort -n -k 2 sample$i.variants.removedqs > sample$i.variants.removedqs.sorted; done
 
 # remove top line and cut the 2nd column with IDs
+####### GÖR for-loop!
 tail -n +2 sample1.variants.removedqs.sorted | cut -f 2 > sample1.variants.IDs
 
+cd ..
+mkdir filtering_qc_read_depth
+
 # we sorted wrong way in previous step, do a new sort to be able to compare the files. 
-comm -12 <(sort filtering/sample1.filtered.positions) <(sort sorted_qualityscore_vcf/sample1.variants.IDs) > sample1.finals.IDs
+####### GÖR for-loop!
+comm -12 <(sort filtering/sample1.filtered.positions) <(sort sorted_qualityscore_vcf/sample1.variants.IDs) > /filtering_qc_read_depth/sample1.finals.IDs
 
 # go back one step
 cd -
@@ -154,6 +159,7 @@ cd -
 mkdir SNP_results
 
 # compare IDs from quality score + reading depth conditions with unique snp and put results in the new folder
+######## GÖR for-loop!
 comm -12 sample2.final.IDs snp_positions/sample2_unique_snp_pos > SNP_results/sample1.snp
 
 
