@@ -114,19 +114,18 @@ for file in ./samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cu
 mkdir ./results/filtering
 mv ./samfiles/*.filtered.positions ./results/filtering
 
-#### Det här nedan kan beehöva ändras
-Kolla kod!! 
-
 #Extract positions for snps
 cd results
+mkdir snp_positions 
 for file in *_variants.vcf; do cut -f 2 $file | sort > ./snp_positions/${file/_variants.vcf/_snp_pos}; done
+
+cd snp_positions
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
 for file in *_snp_pos; do if [ $file != sample1_snp_pos ]; then comm -23 $file sample1_snp_pos > ${file/_snp_pos/_unique_snp_pos}; fi; done
 cd ..
 ##
 
-cd results/
 mkdir sorted_qualityscore_vcf
 cd sorted_qualityscore_vcf/
 
@@ -138,30 +137,26 @@ for file in *.vcf; do tail -n +32 $file |sort -n -k 6 > sorted_qualityscore_vcf/
 # keep headline, and choose the ones with quality score >10
 for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i* > sample$i.variants.removedqs; done
 
-# Now, sort the sample$i.variants.removedqs on ID. ***can change the sorting, see below at comm line
-for i in {1..12};sort -n -k 2 sample$i.variants.removedqs > sample$i.variants.removedqs.sorted; done
+# Do not do this!!!
+##### Now, sort the sample$i.variants.removedqs on ID. ***can change the sorting, see below at comm line
+##### for i in {1..12};sort -n -k 2 sample$i.variants.removedqs > sample$i.variants.removedqs.sorted; done
 
 # remove top line and cut the 2nd column with IDs
-####### GÖR for-loop!
-tail -n +2 sample1.variants.removedqs.sorted | cut -f 2 > sample1.variants.IDs
+####### sample1 is WT, not necessary to do it.
+for i in {1..12}; do tail -n +2 sample$i.variants.removedqs| cut -f 2 > sample$i.variants.IDs; done
 
 cd ..
 mkdir filtering_qc_read_depth
 
 # we sorted wrong way in previous step, do a new sort to be able to compare the files. 
-####### GÖR for-loop!
-comm -12 <(sort filtering/sample1.filtered.positions) <(sort sorted_qualityscore_vcf/sample1.variants.IDs) > /filtering_qc_read_depth/sample1.finals.IDs
+for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered.positions) <(sort sorted_qualityscore_vcf/sample$i.variants.IDs) > filtering_qc_read_depth/sample$i.final.IDs; done
 
-# go back one step
-cd -
 
 # create new directory
 mkdir SNP_results
 
 # compare IDs from quality score + reading depth conditions with unique snp and put results in the new folder
-######## GÖR for-loop!
-comm -12 sample2.final.IDs snp_positions/sample2_unique_snp_pos > SNP_results/sample1.snp
-
+for i in {2..12}; do comm -12 filtering_qc_read_depth/sample${i}.final.IDs snp_positions/sample${i}_unique_snp_pos > SNP_results/sample${i}.snp; done
 
 # Go back to Project home folder
 cd ../..
