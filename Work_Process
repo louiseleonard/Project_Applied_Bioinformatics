@@ -111,7 +111,7 @@ for file in ./samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cu
 mkdir ./results/filtering
 mv ./samfiles/*.filtered.positions ./results/filtering
 
-#Filter quality to minimum 10
+#Filter quality to minimum 10 ####BEHÖVER GÖRAS FÖR 12an
 # sort with the quality score, start from line just above the numbers,  
 for file in *.vcf; do tail -n +32 $file |sort -n -k 6 > sorted_qualityscore_vcf/${file/.sortedqs}; done
 
