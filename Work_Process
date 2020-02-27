@@ -127,11 +127,14 @@ for file in *.vcf; do tail -n +32 $file |sort -n -k 6 > sorted_qualityscore_vcf/
 # keep headline, and choose the ones with quality score >10
 for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i* > sample$i.variants.removedqs; done
 
-# Now, sort the sample$i.variants.removedqs on ID.
+# Now, sort the sample$i.variants.removedqs on ID. ***can change the sorting, see below at comm line
 for i in {1..12};sort -n -k 2 sample$i.variants.removedqs > sample$i.variants.removedqs.sorted; done
 
 # remove top line and cut the 2nd column with IDs
 tail -n +2 sample1.variants.removedqs.sorted | cut -f 2 > sample1.variants.IDs
+
+# we sorted wrong way in previous step, do a new sort to be able to compare the files. 
+comm -12 <(sort filtering/sample1.filtered.positions) <(sort sorted_qualityscore_vcf/sample1.variants.IDs) | less -S
 
 
 
