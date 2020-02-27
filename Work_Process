@@ -159,7 +159,7 @@ mkdir SNP_results
 for i in {2..12}; do comm -12 filtering_qc_read_depth/sample${i}.final.IDs snp_positions/sample${i}_unique_snp_pos > SNP_results/sample${i}.snp; done
 
 # Go back to Project home folder
-cd ../..
+cd ..
 
 
 
