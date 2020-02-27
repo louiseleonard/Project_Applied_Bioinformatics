@@ -104,6 +104,9 @@ for file in ./results/*_variants.bcf; do bcftools call -c -v $file > ${file/.bcf
 # View .vfd file
 less -S results/sample1_variants.vcf
 
+# Calculate average coverage for all samples
+for i in {1..12}; do samtools depth samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
+
 #Filtering
 
 #Filter reading depth to maximum 400
@@ -111,9 +114,27 @@ for file in ./samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cu
 mkdir ./results/filtering
 mv ./samfiles/*.filtered.positions ./results/filtering
 
-#Filter quality to minimum 10 ####BEHÖVER GÖRAS FÖR 12an
-# sort with the quality score, start from line just above the numbers,  
+
+cd results/
+mkdir sorted_qualityscore_vcf
+cd sorted_qualityscore_vcf/
+
+#Filter quality to minimum 10 
+# sort with the quality score, start from line just above the numbers, 
+# (not necessery to sort, but it is nice for a quick overlook of the scores)
 for file in *.vcf; do tail -n +32 $file |sort -n -k 6 > sorted_qualityscore_vcf/${file/.vcf/.sortedqs}; done
+
+# keep headline, and choose the ones with quality score >10
+for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i* > sample$i.variants.removedqs; done
+
+# Now, sort the sample$i.variants.removedqs on ID.
+
+
+
+# Go back to Project home folder
+cd ../..
+
+
 
 
 
@@ -134,5 +155,3 @@ cd ..
 # keep headline, and choose the ones with quality score >10
 awk -F"\t" 'NR==1||$6>10' sample1_variants.vcf.sortedqs
 
-# Calculate average coverage for all samples
-for i in {1..12}; do samtools depth samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
