@@ -110,3 +110,9 @@ for file in *_variants.vcf; do cut -f 2 $file | sort > ./snp_positions/${file/_v
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
 cd ..
+
+# sort with the quality score, start from line just above the numbers,  
+tail -n +32 sample5_variants.vcf |sort -n -k 6 > sorted_qualityscore_vcf/sample5_variants.vcf.sortedqs
+
+# keep headline, and choose the ones with quality score  20<qs<400.
+awk -F"\t" 'NR==1||$6>20 &&$6<400' sample1_variants.vcf.sortedqs
