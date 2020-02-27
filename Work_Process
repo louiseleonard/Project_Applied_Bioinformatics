@@ -117,3 +117,6 @@ tail -n +32 sample5_variants.vcf |sort -n -k 6 > sorted_qualityscore_vcf/sample5
 
 # keep headline, and choose the ones with quality score >10
 awk -F"\t" 'NR==1||$6>10' sample1_variants.vcf.sortedqs
+
+# Calculate average coverage for all samples
+for i in {1..12}; do samtools depth samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
