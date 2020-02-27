@@ -103,3 +103,10 @@ bcftools call -c -v results/sample1_variants.bcf > results/sample1_variants.vcf
 
 # View .vfd file
 less -S results/sample1_variants.vcf
+
+#Extract positions for snps
+cd results
+for file in *_variants.vcf; do cut -f 2 $file | sort > ./snp_positions/${file/_variants.vcf/_snp_pos}; done
+
+#Extract positions that are unique in the RSC samples (samples 2-12), compared to the WT sample (sample 1)
+cd ..
