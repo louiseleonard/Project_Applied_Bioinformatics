@@ -114,6 +114,17 @@ for file in ./samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cu
 mkdir ./results/filtering
 mv ./samfiles/*.filtered.positions ./results/filtering
 
+#### Det här nedan kan beehöva ändras
+Kolla kod!! 
+
+#Extract positions for snps
+cd results
+for file in *_variants.vcf; do cut -f 2 $file | sort > ./snp_positions/${file/_variants.vcf/_snp_pos}; done
+
+#Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
+for file in *_snp_pos; do if [ $file != sample1_snp_pos ]; then comm -23 $file sample1_snp_pos > ${file/_snp_pos/_unique_snp_pos}; fi; done
+cd ..
+##
 
 cd results/
 mkdir sorted_qualityscore_vcf
@@ -136,6 +147,14 @@ tail -n +2 sample1.variants.removedqs.sorted | cut -f 2 > sample1.variants.IDs
 # we sorted wrong way in previous step, do a new sort to be able to compare the files. 
 comm -12 <(sort filtering/sample1.filtered.positions) <(sort sorted_qualityscore_vcf/sample1.variants.IDs) > sample1.finals.IDs
 
+# go back one step
+cd -
+
+# create new directory
+mkdir SNP_results
+
+# compare IDs from quality score + reading depth conditions with unique snp and put results in the new folder
+comm -12 sample2.final.IDs snp_positions/sample2_unique_snp_pos > SNP_results/sample1.snp
 
 
 # Go back to Project home folder
@@ -146,19 +165,9 @@ cd ../..
 
 
 
-#### Det här nedan kan beehöva ändras
-
-#Extract positions for snps
-cd results
-for file in *_variants.vcf; do cut -f 2 $file | sort > ./snp_positions/${file/_variants.vcf/_snp_pos}; done
-
-#Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
-for file in *_snp_pos; do if [ $file != sample1_snp_pos ]; then comm -23 $file sample1_snp_pos > ${file/_snp_pos/_unique_snp_pos}; fi; done
-cd ..
 
 
 
 
-# keep headline, and choose the ones with quality score >10
-awk -F"\t" 'NR==1||$6>10' sample1_variants.vcf.sortedqs
+
 
