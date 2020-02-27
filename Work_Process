@@ -104,6 +104,10 @@ for file in ./results/*_variants.bcf; do bcftools call -c -v $file > ${file/.bcf
 # View .vfd file
 less -S results/sample1_variants.vcf
 
+#Filtering
+#Filter reading depth to maximum 400
+samtools depth sample1.sorted.bam | awk '$3<400' | cut -f 2 > sample1.filtered.positions
+
 #Extract positions for snps
 cd results
 for file in *_variants.vcf; do cut -f 2 $file | sort > ./snp_positions/${file/_variants.vcf/_snp_pos}; done
