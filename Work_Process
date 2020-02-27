@@ -99,7 +99,7 @@ mkdir results
 samtools mpileup -g -f data/reference_sequence.fasta samfiles/sample1.sorted.bam > results/sample1_variants.bcf
 
 # .bcf format into .vcf format
-bcftools call -c -v results/sample1_variants.bcf > results/sample1_variants.vcf
+for file in ./results/*_variants.bcf; do bcftools call -c -v $file > ${file/.bcf/.vcf}; done
 
 # View .vfd file
 less -S results/sample1_variants.vcf
