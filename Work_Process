@@ -128,10 +128,6 @@ cd sorted_qualityscore_vcf/
 # keep headline, and choose the ones with quality score >10
 for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i* > sample$i.variants.removedqs; done
 
-# Do not do this!!!
-##### Now, sort the sample$i.variants.removedqs on ID. ***can change the sorting, see below at comm line
-##### for i in {1..12};sort -n -k 2 sample$i.variants.removedqs > sample$i.variants.removedqs.sorted; done
-
 # remove top line and cut the 2nd column with IDs
 for i in {1..12}; do tail -n +2 sample$i.variants.removedqs| cut -f 2 > sample$i.variants.IDs; done
 
