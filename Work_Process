@@ -39,43 +39,44 @@ mv reference_sequence.fasta ./data
 bwa index ./data/reference_sequence.fasta
 
 #Create folder for samfiles
-mkdir samfiles
+mkdir results
+mkdir ./results/samfiles
 
 #Align sample 1
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059824.fastq > ./samfiles/sample1.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059824.fastq > .results/samfiles/sample1.sam
 
 #Align sample 10
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059825.fastq > ./samfiles/sample10.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059825.fastq > ./results/samfiles/sample10.sam
 
 #Align sample 11
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059826.fastq > ./samfiles/sample11.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059826.fastq > ./results/samfiles/sample11.sam
 
 #Align sample 12
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059827.fastq > ./samfiles/sample12.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059827.fastq > ./results/samfiles/sample12.sam
 
 #Align sample 2
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059828.fastq > ./samfiles/sample2.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059828.fastq > ./results/samfiles/sample2.sam
 
 #Align sample 3
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059829.fastq > ./samfiles/sample3.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059829.fastq > ./results/samfiles/sample3.sam
 
 #Align sample 4
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059830.fastq > ./samfiles/sample4.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059830.fastq > ./results/samfiles/sample4.sam
 
 #Align sample 5
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059831.fastq > ./samfiles/sample5.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059831.fastq > ./results/samfiles/sample5.sam
 
 #Align sample 6
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059832.fastq > ./samfiles/sample6.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059832.fastq > ./results/samfiles/sample6.sam
 
 #Align sample 7
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059833.fastq > ./samfiles/sample7.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059833.fastq > ./results/samfiles/sample7.sam
 
 #Align sample 8
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059834.fastq > ./samfiles/sample8.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059834.fastq > ./results/samfiles/sample8.sam
 
 #Align sample 9
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./samfiles/sample9.sam
+bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./results/samfiles/sample9.sam
 
 # fast quality control of all samples
 for i in {24..35}; do fastqc ./large_data/ERR20598$i.fastq; done
@@ -89,14 +90,14 @@ mkdir ./large_data/fastqc_files
 mv *_fastqc* ./large_data/fastqc_files
 
 #Convert samfiles into sorted bam files and bai files
-cd samfiles
+cd ./results/samfiles
 for file in *.sam; do samtools view -bS $file > ${file/.sam/.bam}; done
 for file in *.bam; do samtools sort $file > ${file/.bam/.sorted.bam}; done
 for file in *.sorted.bam do samtools index $file; done
 cd ..
 
-mkdir results
-samtools mpileup -g -f data/reference_sequence.fasta samfiles/sample1.sorted.bam > results/sample1_variants.bcf
+#SNP call using samtools mpileup 
+for i in {1..12}; do samtools mpileup -g -f data/reference_sequence.fasta /results/samfiles/sample$i.sorted.bam > results/sample$i_variants.bcf
 
 # .bcf format into .vcf format
 for file in ./results/*_variants.bcf; do bcftools call -c -v $file > ${file/.bcf/.vcf}; done
@@ -105,14 +106,14 @@ for file in ./results/*_variants.bcf; do bcftools call -c -v $file > ${file/.bcf
 less -S results/sample1_variants.vcf
 
 # Calculate average coverage for all samples
-for i in {1..12}; do samtools depth samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
+for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
 
 #Filtering
 
 #Filter reading depth to maximum 400
-for file in ./samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cut -f 2 > ${file/.sorted.bam/.filtered.positions}; done
+for file in ./results/samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cut -f 2 > ${file/.sorted.bam/.filtered.positions}; done
 mkdir ./results/filtering
-mv ./samfiles/*.filtered.positions ./results/filtering
+mv ./results/samfiles/*.filtered.positions ./results/filtering
 
 cd results
 mkdir sorted_qualityscore_vcf
@@ -171,7 +172,7 @@ mkdir results_depth600
 
 #Filter reading depth to maximum 600
 mkdir ./results/filtering600
-for i in {1..12}; do samtools depth ./samfiles/sample$i.sorted.bam | awk '$3<600' | cut -f 2 > ./results_depth600/sample$i.filtered.positions; done
+for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '$3<600' | cut -f 2 > ./results_depth600/sample$i.filtered.positions; done
 mkdir filtering
 mv ./*.filtered.positions ./filtering
 
