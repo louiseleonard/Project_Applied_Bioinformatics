@@ -124,14 +124,17 @@ cd ..
 # (not necessery to sort, but it is nice for a quick overlook of the scores)
 for i in {1..12}; do tail -n +32 SNP_calling/sample${i}_variants.vcf |sort -n -k 6 > filtering/sorted_qualityscore_vcf/sample$i.sortedqs; done
 
+cd filtering
 # keep headline, and choose the ones with quality score >10
-for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sorted_qualityscore_vcf/sample$i.sortedqs > sorted_qualityscore_vcf/sample$i.filtered_quality_scores_with_scores; done
+for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' filtering/sorted_qualityscore_vcf/sample$i.sortedqs > sorted_qualityscore_vcf/sample$i.filtered_quality_scores_with_scores; done
 
 # remove top line and cut the 2nd column with IDs
 for i in {1..12}; do tail -n +2 sorted_qualityscore_vcf/sample$i.filtered_quality_scores_with_scores| cut -f 2 > sample$i.filtered_quality_scores; done
 
 # Find common id:s from filtering on depth and quality score 
 for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered_read_depths) <(sort filtering/sample$i.filtered_quality_scores) > filtering/sample$i.filtered_qs_depth; done
+
+cd ..
 
 mkdir SNP_unique_positions
 
