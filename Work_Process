@@ -111,9 +111,9 @@ for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk
 #Filtering
 
 #Filter reading depth to maximum 400
-for file in ./results/samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cut -f 2 > ${file/.sorted.bam/.filtered.positions}; done
 mkdir ./results/filtering
-mv ./results/samfiles/*.filtered.positions ./results/filtering
+for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '$3<400' | cut -f 2 > ./results/filtering/sample$i.filtered_read_depths; done
+
 
 cd results
 mkdir sorted_qualityscore_vcf
