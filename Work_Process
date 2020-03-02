@@ -97,13 +97,13 @@ for file in *.sorted.bam do samtools index $file; done
 cd ..
 
 #SNP call using samtools mpileup 
-for i in {1..12}; do samtools mpileup -g -f data/reference_sequence.fasta /results/samfiles/sample$i.sorted.bam > results/sample$i_variants.bcf
+for i in {1..12}; do samtools mpileup -g -f data/reference_sequence.fasta /results/samfiles/sample$i.sorted.bam > results/SNP_callng/sample$i_variants.bcf
 
 # .bcf format into .vcf format
-for file in ./results/*_variants.bcf; do bcftools call -c -v $file > ${file/.bcf/.vcf}; done
+for i in {1..12}; do bcftools call -c -v ./results/SNP_calling/sample$i_variants.bcf > ./results/SNP_calling/${file/.bcf/.vcf}; done
 
 # View .vfd file
-less -S results/sample1_variants.vcf
+less -S results/SNP_calling/sample1_variants.vcf
 
 # Calculate average coverage for all samples
 for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
@@ -176,7 +176,7 @@ for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk
 mkdir filtering
 mv ./*.filtered.positions ./filtering
 
-cp ./results/*.vcf ./results_depth600
+cp ./results/SNP_calling/*.vcf ./results_depth600
 cd results_depth600
 mkdir ./results_depth600/sorted_qualityscore_vcf
 cd ./results_depth600
