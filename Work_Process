@@ -124,19 +124,14 @@ cd ..
 # (not necessery to sort, but it is nice for a quick overlook of the scores)
 for i in {1..12}; do tail -n +32 SNP_calling/sample${i}_variants.vcf |sort -n -k 6 > filtering/sorted_qualityscore_vcf/sample$i.sortedqs; done
 
-cd sorted_qualityscore_vcf/
 # keep headline, and choose the ones with quality score >10
-for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i.sortedqs > sample$i.filtered_quality_scores_with_scores; done
+for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sorted_qualityscore_vcf/sample$i.sortedqs > sorted_qualityscore_vcf/sample$i.filtered_quality_scores_with_scores; done
 
 # remove top line and cut the 2nd column with IDs
-for i in {1..12}; do tail -n +2 sample$i.filtered_quality_scores_with_scores| cut -f 2 > sample$i.filtered_quality_scores; done
+for i in {1..12}; do tail -n +2 sorted_qualityscore_vcf/sample$i.filtered_quality_scores_with_scores| cut -f 2 > sample$i.filtered_quality_scores; done
 
-cd ..
-cd ..
-mkdir filtering_qc_read_depth
-
-# we sorted based on the wrong column in previous step, do a new sort to be able to compare the files. 
-for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered.positions) <(sort sorted_qualityscore_vcf/sample$i.variants.IDs) > filtering_qc_read_depth/sample$i.final.IDs; done
+# Find common id:s from filtering on depth and quality score 
+for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered_read_depths) <(sort filtering/sample$i.filtered_quality_scores) > sample$i.filtered_qs_depth; done
 
 
 
