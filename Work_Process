@@ -145,7 +145,7 @@ for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered.positions) <(so
 mkdir SNP_positions 
 for i in {1..12}; do cut -f 2 ./filtering_qc_read_depth/sample$i.final.IDs | sort > ./SNP_positions/sample$i.snp.pos; done
 
-cd snp_positions
+cd SNP_positions
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
 for file in *.snp.pos; do if [ $file != sample1.snp.pos ]; then comm -23 $file sample1.snp.pos > ${file/.snp.pos/.unique.snp.pos}; fi; done
@@ -155,7 +155,7 @@ cd ..
 mkdir SNP_results
 
 # compare IDs from quality score + reading depth conditions with unique snp and put results in the new folder
-for i in {2..12}; do comm -12 filtering_qc_read_depth/sample${i}.final.IDs SNP_positions/sample${i}_unique_snp_pos > SNP_results/sample${i}.snp; done
+for i in {2..12}; do comm -12 filtering_qc_read_depth/sample${i}.final.IDs SNP_positions/sample${i}.unique.snp.pos > SNP_results/sample${i}.snp; done
 
 # Go back to Project home folder
 cd ..
@@ -200,16 +200,14 @@ for i in {1..12}; do tail -n +2 sample$i.variants.removedqs| cut -f 2 > sample$i
 cd ..
 mkdir filtering_qc_read_depth
 
-###HÄR + flytta filer
 # we sorted based on the wrong column in previous step, do a new sort to be able to compare the files. 
 for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered.positions) <(sort sorted_qualityscore_vcf/sample$i.variants.IDs) > filtering_qc_read_depth/sample$i.final.IDs; done
-
 
 #Extract positions for snps
 mkdir SNP_positions 
 for i in {1..12}; do cut -f 2 ./filtering_qc_read_depth/sample$i.final.IDs | sort > ./SNP_positions/sample$i.snp.pos; done
 
-cd snp_positions
+cd SNP_positions
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
 for file in *.snp.pos; do if [ $file != sample1.snp.pos ]; then comm -23 $file sample1.snp.pos > ${file/.snp.pos/.unique.snp.pos}; fi; done
@@ -219,7 +217,7 @@ cd ..
 mkdir SNP_results
 
 # compare IDs from quality score + reading depth conditions with unique snp and put results in the new folder
-for i in {2..12}; do comm -12 filtering_qc_read_depth/sample${i}.final.IDs SNP_positions/sample${i}_unique_snp_pos > SNP_results/sample${i}.snp; done
+for i in {2..12}; do comm -12 filtering_qc_read_depth/sample${i}.final.IDs SNP_positions/sample${i}.unique.snp.pos > SNP_results/sample${i}.snp; done
 
 # Go back to Project home folder
 cd ..
@@ -227,7 +225,7 @@ cd ..
 
 
 
-
+cd .
 
 
 
