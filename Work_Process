@@ -122,7 +122,7 @@ cd ..
 #Filter quality to minimum 10 
 # sort with the quality score, start from line just above the numbers, 
 # (not necessery to sort, but it is nice for a quick overlook of the scores)
-for i in {1..12}; do tail -n +32 ./SNP_calling/sample$i_variants.vcf |sort -n -k 6 > /filtering/sample$i.sortedqs; done
+for i in {1..12}; do tail -n +32 SNP_calling/sample${i}_variants.vcf |sort -n -k 6 > filtering/sorted_qualityscore_vcf/sample$i.sortedqs; done
 
 cd sorted_qualityscore_vcf/
 # keep headline, and choose the ones with quality score >10
