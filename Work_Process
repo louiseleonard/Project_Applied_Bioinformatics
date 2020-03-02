@@ -141,12 +141,6 @@ mkdir SNP_unique_positions
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
 for i in {2..12}; do comm -23 filtering/sample$i.filtered_qs_depth filtering/sample1.filtered_qs_depth > SNP_unique_positions/sample$i.unique.snp.pos; done
 
-# create new directory
-mkdir SNP_results
-
-# compare IDs from quality score + reading depth conditions with unique snp and put results in the new folder
-for i in {2..12}; do comm -12 filtering_qc_read_depth/sample${i}.final.IDs SNP_positions/sample${i}.unique.snp.pos > SNP_results/sample${i}.snp; done
-
 # Go back to Project home folder
 cd ..
 
