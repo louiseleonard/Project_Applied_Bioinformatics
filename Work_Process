@@ -131,7 +131,7 @@ for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sorted_qualityscore_vcf/sample$i.
 for i in {1..12}; do tail -n +2 sorted_qualityscore_vcf/sample$i.filtered_quality_scores_with_scores| cut -f 2 > sample$i.filtered_quality_scores; done
 
 # Find common id:s from filtering on depth and quality score 
-for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered_read_depths) <(sort filtering/sample$i.filtered_quality_scores) > sample$i.filtered_qs_depth; done
+for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered_read_depths) <(sort filtering/sample$i.filtered_quality_scores) > filtering/sample$i.filtered_qs_depth; done
 
 
 
