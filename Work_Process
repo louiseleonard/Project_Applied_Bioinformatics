@@ -209,6 +209,18 @@ for i in {2..12}; do comm -12 filtering_qc_read_depth/sample${i}.final.IDs SNP_p
 cd ..
 
 
+# In the article, they found xx unique SNPs. To see how many we found:
+# Concatenate all SNPs for sample 2,…,12. Then, sort them and filter out repeated lines.
+# This will result in all unique SNPs 
+
+for i in {2..12}; do cat results/SNP_unique_positions/sample$i.unique.snp.pos; done | sort | uniq > results/SNP_unique_positions/all_unique_SNP_positions
+
+# Count rows to get number of unique SNPs
+
+wc -l results/SNP_unique_positions/all_unique_SNP_positions
+
+
+
 
 
 cd .
