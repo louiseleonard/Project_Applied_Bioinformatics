@@ -115,7 +115,7 @@ mkdir ./results/filtering
 for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '$3<400' | cut -f 2 > ./results/filtering/sample$i.filtered_read_depths; done
 
 
-cd results
+cd results/filtering
 mkdir sorted_qualityscore_vcf
 
 #Filter quality to minimum 10 
@@ -134,6 +134,7 @@ for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i* > sample$i.variants.rem
 # remove top line and cut the 2nd column with IDs
 for i in {1..12}; do tail -n +2 sample$i.variants.removedqs| cut -f 2 > sample$i.variants.IDs; done
 
+cd ..
 cd ..
 mkdir filtering_qc_read_depth
 
