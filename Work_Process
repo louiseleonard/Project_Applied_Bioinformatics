@@ -134,16 +134,15 @@ for i in {1..12}; do tail -n +2 sorted_qualityscore_vcf/sample$i.filtered_qualit
 for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered_read_depths) <(sort filtering/sample$i.filtered_quality_scores) > filtering/sample$i.filtered_qs_depth; done
 
 
+####### TA BORT
+#Extract positions for snps 
+for i in {1..12}; do cut -f 2 ./filtering/sample$i.filtered_qs_depth | sort > ./SNP_positions/sample$i.snp.pos; done
+########
 
-#Extract positions for snps
-mkdir SNP_positions 
-for i in {1..12}; do cut -f 2 ./filtering_qc_read_depth/sample$i.final.IDs | sort > ./SNP_positions/sample$i.snp.pos; done
-
-cd SNP_positions
+mkdir SNP_unique_positions
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
-for file in *.snp.pos; do if [ $file != sample1.snp.pos ]; then comm -23 $file sample1.snp.pos > ${file/.snp.pos/.unique.snp.pos}; fi; done
-cd ..
+for i in {1..12}; do if [ $i != 1 ]; then comm -23 filtering/sample$i.filtered_qs_depth filtering/sample1.filtered_qs_depth > /SNP_unique_positions/sample$i.unique.snp.pos; fi; done
 
 # create new directory
 mkdir SNP_results
