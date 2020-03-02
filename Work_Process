@@ -157,6 +157,23 @@ for i in {2..12}; do cat results/SNP_unique_positions/sample$i.unique.snp.pos; d
 wc -l results/SNP_unique_positions/all_unique_SNP_positions
 
 
+### search from file:
+place snps in a file named X.txt
+33544
+1837270
+1838506
+3246699
+3278306
+3278390
+3278391
+3314422
+3550149
+3840391
+3841405
+
+#grep these in another file
+grep -f X.txt sample.txt | less
+
 
 ########################
 
