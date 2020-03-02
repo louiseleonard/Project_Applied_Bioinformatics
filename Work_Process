@@ -114,26 +114,15 @@ for file in ./samfiles/*.sorted.bam; do samtools depth $file | awk '$3<400' | cu
 mkdir ./results/filtering
 mv ./samfiles/*.filtered.positions ./results/filtering
 
-#Extract positions for snps
 cd results
-mkdir snp_positions 
-for file in *_variants.vcf; do cut -f 2 $file | sort > ./snp_positions/${file/_variants.vcf/_snp_pos}; done
-
-cd snp_positions
-
-#Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
-for file in *_snp_pos; do if [ $file != sample1_snp_pos ]; then comm -23 $file sample1_snp_pos > ${file/_snp_pos/_unique_snp_pos}; fi; done
-cd ..
-##
-
 mkdir sorted_qualityscore_vcf
-cd sorted_qualityscore_vcf/
 
 #Filter quality to minimum 10 
 # sort with the quality score, start from line just above the numbers, 
 # (not necessery to sort, but it is nice for a quick overlook of the scores)
 for file in *.vcf; do tail -n +32 $file |sort -n -k 6 > sorted_qualityscore_vcf/${file/.vcf/.sortedqs}; done
 
+cd sorted_qualityscore_vcf/
 # keep headline, and choose the ones with quality score >10
 for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i* > sample$i.variants.removedqs; done
 
@@ -142,15 +131,25 @@ for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sample$i* > sample$i.variants.rem
 ##### for i in {1..12};sort -n -k 2 sample$i.variants.removedqs > sample$i.variants.removedqs.sorted; done
 
 # remove top line and cut the 2nd column with IDs
-####### sample1 is WT, not necessary to do it.
 for i in {1..12}; do tail -n +2 sample$i.variants.removedqs| cut -f 2 > sample$i.variants.IDs; done
 
 cd ..
 mkdir filtering_qc_read_depth
 
-# we sorted wrong way in previous step, do a new sort to be able to compare the files. 
+# we sorted based on the wrong column in previous step, do a new sort to be able to compare the files. 
 for i in {1..12}; do comm -12 <(sort filtering/sample$i.filtered.positions) <(sort sorted_qualityscore_vcf/sample$i.variants.IDs) > filtering_qc_read_depth/sample$i.final.IDs; done
 
+
+
+#Extract positions for snps
+mkdir SNP_positions 
+for i in {1..12}; do cut -f 2 ./filtering_qc_read_depth/sample$i.final.IDs | sort > ./SNP_positions/sample$i.snp.pos; done
+
+cd snp_positions
+
+#Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
+for file in *.snp.pos; do if [ $file != sample1.snp.pos ]; then comm -23 $file sample1.snp.pos > ${file/.snp.pos/.unique.snp.pos}; fi; done
+cd ..
 
 # create new directory
 mkdir SNP_results
