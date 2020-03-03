@@ -65,7 +65,7 @@ mkdir results
 mkdir ./results/samfiles
 
 #Align sample 1
-bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059824.fastq > .results/samfiles/sample1.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059824.fastq > ./results/samfiles/sample1.sam
 
 #Align sample 10
 bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059825.fastq > ./results/samfiles/sample10.sam
