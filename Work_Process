@@ -103,44 +103,54 @@ bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059835.fastq 
 
 ## FASTQC
 # Fast quality control of all samples
+
 cd ./data/sequencing_data
 
 for i in {24..35}; do fastqc ERR20598$i.fastq; done
 
 # make a new directory
+
 mkdir fastqc_files
 
 # move files to own folder
+
 mv *_fastqc* ./fastqc_files
 
+# Move back to Project folder
 
-######### TODO!!!!! move folder to results!!!!! ###########
-# move the folder to the results
+cd ../..
 
 
+# Convert samfiles into sorted bam files and bai files
 
-#Convert samfiles into sorted bam files and bai files
 cd ./results/samfiles
 for file in *.sam; do samtools view -bS $file > ${file/.sam/.bam}; done
 for file in *.bam; do samtools sort $file > ${file/.bam/.sorted.bam}; done
 for file in *.sorted.bam do samtools index $file; done
 cd ..
 
-#SNP call using samtools mpileup 
+
+## Variant calling
+# SNP call using samtools mpileup 
+
+mkdir SNP_calling
+cd ..
+
 for i in {1..12}; do samtools mpileup -g -f data/reference_sequence.fasta /results/samfiles/sample$i.sorted.bam > results/SNP_callng/sample$i_variants.bcf
 
 # .bcf format into .vcf format
 for i in {1..12}; do bcftools call -c -v ./results/SNP_calling/sample$i_variants.bcf > ./results/SNP_calling/${file/.bcf/.vcf}; done
 
-# View .vfd file
+# View .vcf file
 less -S results/SNP_calling/sample1_variants.vcf
 
 # Calculate average coverage for all samples
 for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
 
-#Filtering
 
-#Filter reading depth to maximum 400
+## Filtering
+
+# Filter reading depth to maximum 400
 mkdir ./results/filtering
 for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '$3<400' | cut -f 2 > ./results/filtering/sample$i.filtered_read_depths; done
 
