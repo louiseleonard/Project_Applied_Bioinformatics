@@ -157,8 +157,9 @@ for i in {2..12}; do cat results/SNP_unique_positions/sample$i.unique.snp.pos; d
 wc -l results/SNP_unique_positions/all_unique_SNP_positions
 
 
+
 ### search from file:
-place snps in a file named positions.txt
+place snps in a file named positions.txt in folder results/SNP_calling
 33544
 1837270
 1838506
@@ -174,11 +175,17 @@ place snps in a file named positions.txt
 #grep these in another file
 for i in {1..12}; do grep -f results/SNP_calling/positions.txt results/SNP_calling/sample${i}_variants.vcf > results/SNP_calling/Positions/sample$i.SNPs_before_filtering; done
 
+cd results/samfiles
+
 # Make files with the read depth for every position.
 for i in {1..12}; do samtools depth sample$i.sorted.bam > read_depths/sample$i.read_depths; done
 
-# Look at a specific position. Print the line that match <POSITION>
-# grep -w '<POSITION>' | cat
+
+# compare to file with exact text
+#grep -w -f position.txt sampl | less
+for i in {1..12}; do grep -w -f results/SNP_calli/positions.txt read_depths/sample${i}.read_depths > read_depths/Positions_of_interested/sample$i.read_depths_posofinterest; done
+
+
 
 
 
