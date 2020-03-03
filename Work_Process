@@ -174,8 +174,11 @@ place snps in a file named positions.txt
 #grep these in another file
 for i in {1..12}; do grep -f results/SNP_calling/positions.txt results/SNP_calling/sample${i}_variants.vcf > results/SNP_calling/Positions/sample$i.SNPs_before_filtering; done
 
+# Make files with the read depth for every position.
+for i in {1..12}; do samtools depth sample$i.sorted.bam > read_depths/sample$i.read_depths; done
 
-
+# Look at a specific position. Print the line that match <POSITION>
+# grep -w '<POSITION>' | cat
 
 
 
