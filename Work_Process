@@ -232,8 +232,13 @@ for i in {1..12}; do grep -w -f read_depths/positions.txt read_depths/sample${i}
 cd ../..
 
 
-#### To avoid duplicate reads
+#### To avoid duplicate reads, test count nr of reads and average coverage
 for i in {1..12}; do samtools rmdup -s sample$i.bam sample$i.bam.wo.duplicates; done
+for i in {1..12}; do samtools view sample$i.bam | wc -l; done #Nr of reads without removing duplicates
+for i in {1..12}; do samtools view sample$i.bam.wo.duplicates | wc -l; done #Nr of reads after removing duplicates
+for file in *.bam.wo.duplicates; do samtools sort $file > ${file/.bam.wo.duplicates/.sorted.bam.wo.duplicates}; done
+for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
+
 
 
 
