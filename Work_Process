@@ -1,4 +1,10 @@
-## Downloading the FASTQ-files from ArrayExpress
+# Make a directory for all the data
+
+mkdir data
+cd data
+
+# Downloading the FASTQ-files from ArrayExpress
+
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/004/ERR2059824/ERR2059824.fastq.gz #sample1
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/005/ERR2059825/ERR2059825.fastq.gz #sample10
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/006/ERR2059826/ERR2059826.fastq.gz #sample11 
@@ -13,33 +19,46 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/004/ERR2059834/ERR2059834.fastq.g
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR205/005/ERR2059835/ERR2059835.fastq.gz #sample9
 
 # Alternative way to download the files:
+
 wget https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-5935/E-MTAB-5935.sdrf.txt
 cut -f26 E-MTAB-5935.sdrf.txt > column_with_links.txt
 tail -n +2 column_with_links.txt > links2download.txt
 wget -N -i links2download # Did not run this
 
 #Unzip the files
+
 gunzip *.fastq.gz
 
-mkdir large_data
-mv *.fastq ./large_data
+# Make a directory for all the sample data
+
+mkdir sequencing_data
+
+# Move all fastq files into the new directory
+
+mv *.fastq ./sequencing_data
 
 # Download the genome of Mycobacterium tuberculosis from NCBI
 # Get the files from https://www.ncbi.nlm.nih.gov/genome?LinkName=nuccore_genome&from_uid=444893469, 
 # right click on the Download sequences in FASTA format for genome, protein -> genome, copy linkadress
+# (This will be located directly in the data foler.)
+
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM19595v2/GCF_000195955.2_ASM19595v2_genomic.fna.gz 
 gunzip GCF_000195955.2_ASM19595v2_genomic.fna.gz
 mv GCF_000195955.2_ASM19595v2_genomic.fna reference_sequence.fasta
-mkdir data
-mv reference_sequence.fasta ./data
 
 ## Aligning 
-
 #Index the reference genome
-bwa index ./data/reference_sequence.fasta
 
-#Create folder for samfiles
+bwa index reference_sequence.fasta
+
+cd ..
+
+# Create folder for results
+
 mkdir results
+
+# Create folder for samfiles
+
 mkdir ./results/samfiles
 
 #Align sample 1
