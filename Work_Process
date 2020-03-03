@@ -232,7 +232,8 @@ for i in {1..12}; do grep -w -f read_depths/positions.txt read_depths/sample${i}
 cd ../..
 
 
-
+#### To avoid duplicate reads
+for i in {1..12}; do samtools rmdup -s sample$i.bam sample$i.bam.wo.duplicates; done
 
 
 
