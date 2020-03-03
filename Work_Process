@@ -184,8 +184,9 @@ for i in {1..12}; do samtools depth sample$i.sorted.bam > read_depths/sample$i.r
 
 
 # compare to file with exact text
-#grep -w -f position.txt sampl | less
-for i in {1..12}; do grep -w -f read_depths/positions.txt read_depths/sample${i}.read_depths > read_depths/Positions_of_interested/sample$i.read_depths_posofinterest; done
+#grep -w -f position.txt sample | less
+mkdir read_depths/Positions_of_interest
+for i in {1..12}; do grep -w -f read_depths/positions.txt read_depths/sample${i}.read_depths > read_depths/Positions_of_interest/sample$i.read_depths_posofinterest; done
 
 
 
