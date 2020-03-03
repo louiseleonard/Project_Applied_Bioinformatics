@@ -172,8 +172,10 @@ place snps in a file named positions.txt in folder results/SNP_calling
 3840391
 3841405
 
+mkdir results/SNP_calling/Positions_of_interest
+
 #grep these in another file
-for i in {1..12}; do grep -f results/SNP_calling/positions.txt results/SNP_calling/sample${i}_variants.vcf > results/SNP_calling/Positions/sample$i.SNPs_before_filtering; done
+for i in {1..12}; do grep -f results/SNP_calling/positions.txt results/SNP_calling/sample${i}_variants.vcf > results/SNP_calling/Positions_of_interest/sample$i.SNPs_before_filtering; done
 
 cd results/samfiles
 
@@ -183,7 +185,7 @@ for i in {1..12}; do samtools depth sample$i.sorted.bam > read_depths/sample$i.r
 
 # compare to file with exact text
 #grep -w -f position.txt sampl | less
-for i in {1..12}; do grep -w -f results/SNP_calli/positions.txt read_depths/sample${i}.read_depths > read_depths/Positions_of_interested/sample$i.read_depths_posofinterest; done
+for i in {1..12}; do grep -w -f read_depths/positions.txt read_depths/sample${i}.read_depths > read_depths/Positions_of_interested/sample$i.read_depths_posofinterest; done
 
 
 
