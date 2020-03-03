@@ -46,10 +46,13 @@ wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/195/955/GCF_000195955.2_ASM1
 gunzip GCF_000195955.2_ASM19595v2_genomic.fna.gz
 mv GCF_000195955.2_ASM19595v2_genomic.fna reference_sequence.fasta
 
+
 ## Aligning 
 #Index the reference genome
 
 bwa index reference_sequence.fasta
+
+# Go back to Project directory
 
 cd ..
 
@@ -62,51 +65,59 @@ mkdir results
 mkdir ./results/samfiles
 
 #Align sample 1
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059824.fastq > .results/samfiles/sample1.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059824.fastq > .results/samfiles/sample1.sam
 
 #Align sample 10
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059825.fastq > ./results/samfiles/sample10.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059825.fastq > ./results/samfiles/sample10.sam
 
 #Align sample 11
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059826.fastq > ./results/samfiles/sample11.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059826.fastq > ./results/samfiles/sample11.sam
 
 #Align sample 12
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059827.fastq > ./results/samfiles/sample12.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059827.fastq > ./results/samfiles/sample12.sam
 
 #Align sample 2
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059828.fastq > ./results/samfiles/sample2.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059828.fastq > ./results/samfiles/sample2.sam
 
 #Align sample 3
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059829.fastq > ./results/samfiles/sample3.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059829.fastq > ./results/samfiles/sample3.sam
 
 #Align sample 4
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059830.fastq > ./results/samfiles/sample4.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059830.fastq > ./results/samfiles/sample4.sam
 
 #Align sample 5
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059831.fastq > ./results/samfiles/sample5.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059831.fastq > ./results/samfiles/sample5.sam
 
 #Align sample 6
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059832.fastq > ./results/samfiles/sample6.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059832.fastq > ./results/samfiles/sample6.sam
 
 #Align sample 7
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059833.fastq > ./results/samfiles/sample7.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059833.fastq > ./results/samfiles/sample7.sam
 
 #Align sample 8
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059834.fastq > ./results/samfiles/sample8.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059834.fastq > ./results/samfiles/sample8.sam
 
 #Align sample 9
-bwa mem ./data/reference_sequence.fasta ./large_data/ERR2059835.fastq > ./results/samfiles/sample9.sam
+bwa mem ./data/reference_sequence.fasta ./data/sequencing_data/ERR2059835.fastq > ./results/samfiles/sample9.sam
 
-# fast quality control of all samples
-for i in {24..35}; do fastqc ./large_data/ERR20598$i.fastq; done
-# could use this instead
-fastqc *.fastq
+
+## FASTQC
+# Fast quality control of all samples
+cd ./data/sequencing_data
+
+for i in {24..35}; do fastqc ERR20598$i.fastq; done
 
 # make a new directory
-mkdir ./large_data/fastqc_files
+mkdir fastqc_files
 
 # move files to own folder
-mv *_fastqc* ./large_data/fastqc_files
+mv *_fastqc* ./fastqc_files
+
+
+######### TODO!!!!! move folder to results!!!!! ###########
+# move the folder to the results
+
+
 
 #Convert samfiles into sorted bam files and bai files
 cd ./results/samfiles
