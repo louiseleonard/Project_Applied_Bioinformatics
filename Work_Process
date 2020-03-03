@@ -158,7 +158,7 @@ wc -l results/SNP_unique_positions/all_unique_SNP_positions
 
 
 ### search from file:
-place snps in a file named X.txt
+place snps in a file named positions.txt
 33544
 1837270
 1838506
@@ -172,8 +172,7 @@ place snps in a file named X.txt
 3841405
 
 #grep these in another file
-grep -f X.txt sample.txt | less
-
+for i in {1..12}; do grep -f results/SNP_calling/positions.txt results/SNP_calling/sample${i}_variants.vcf > results/SNP_calling/Positions/SNPs_before_filtering; done
 
 
 
