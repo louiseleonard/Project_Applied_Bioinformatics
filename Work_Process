@@ -159,7 +159,7 @@ cd results/filtering
 mkdir sorted_qualityscore_vcf
 cd ..
 
-#Filter quality to minimum 10 
+# Filter quality to minimum 10 
 # sort with the quality score, start from line just above the numbers, 
 # (not necessery to sort, but it is nice for a quick overlook of the scores)
 for i in {1..12}; do tail -n +32 SNP_calling/sample${i}_variants.vcf |sort -n -k 6 > filtering/sorted_qualityscore_vcf/sample$i.sortedqs; done
@@ -172,7 +172,6 @@ for i in {1..12}; do awk -F"\t" 'NR==1||$6>10' sorted_qualityscore_vcf/sample$i.
 # remove top line and cut the 2nd column with IDs
 for i in {1..12}; do tail -n +2 sorted_qualityscore_vcf/sample$i.filtered_quality_scores_with_scores| cut -f 2 > sample$i.filtered_quality_scores; done
 
-
 # Find common id:s from filtering on depth and quality score 
 for i in {1..12}; do comm -12 <(sort sample$i.filtered_read_depths) <(sort sample$i.filtered_quality_scores) > sample$i.filtered_qs_depth; done
 
@@ -180,10 +179,11 @@ cd ..
 
 mkdir SNP_unique_positions
 
-#Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
+# Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
 for i in {2..12}; do comm -23 filtering/sample$i.filtered_qs_depth filtering/sample1.filtered_qs_depth > SNP_unique_positions/sample$i.unique.snp.pos; done
 
 # Go back to Project home folder
+
 cd ..
 
 # In the article, they found 85 unique SNPs. To see how many we found:
@@ -192,43 +192,44 @@ cd ..
 
 for i in {2..12}; do cat results/SNP_unique_positions/sample$i.unique.snp.pos; done | sort | uniq > results/SNP_unique_positions/all_unique_SNP_positions
 
-# Count rows to get number of unique SNPs
+# Count rows to get number of unique SNPs, resulting in 71 unique positions.
 
 wc -l results/SNP_unique_positions/all_unique_SNP_positions
 
-
-
 ### search from file:
-place snps in a file named positions.txt in folder results/SNP_calling
-33544
-1837270
-1838506
-3246699
-3278306
-3278390
-3278391
-3314422
-3550149
-3840391
-3841405
+# place snps in a file named positions.txt in folder results/SNP_calling
+# 33544
+# 1837270
+# 1838506
+# 3246699
+# 3278306
+# 3278390
+# 3278391
+# 3314422
+# 3550149
+# 3840391
+# 3841405
 
 mkdir results/SNP_calling/Positions_of_interest
 
-#grep these in another file
+# grep these in another file
 for i in {1..12}; do grep -f results/SNP_calling/positions.txt results/SNP_calling/sample${i}_variants.vcf > results/SNP_calling/Positions_of_interest/sample$i.SNPs_before_filtering; done
 
 cd results/samfiles
 
 # Make files with the read depth for every position.
+
 for i in {1..12}; do samtools depth sample$i.sorted.bam > read_depths/sample$i.read_depths; done
 
-
 # compare to file with exact text
-#grep -w -f position.txt sample | less
+
 mkdir read_depths/Positions_of_interest
+
 for i in {1..12}; do grep -w -f read_depths/positions.txt read_depths/sample${i}.read_depths > read_depths/Positions_of_interest/sample$i.read_depths_posofinterest; done
 
+# Go back to Project home folder
 
+cd ../..
 
 
 
