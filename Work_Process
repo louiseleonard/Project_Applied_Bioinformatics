@@ -172,7 +172,7 @@ place snps in a file named positions.txt
 3841405
 
 #grep these in another file
-for i in {1..12}; do grep -f results/SNP_calling/positions.txt results/SNP_calling/sample${i}_variants.vcf > results/SNP_calling/Positions/SNPs_before_filtering; done
+for i in {1..12}; do grep -f results/SNP_calling/positions.txt results/SNP_calling/sample${i}_variants.vcf > results/SNP_calling/Positions/sample$i.SNPs_before_filtering; done
 
 
 
