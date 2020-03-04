@@ -251,6 +251,16 @@ for i in {1..12}; do samtools mpileup -g -d400 -q10 -f data/reference_sequence.f
 # .bcf format into .vcf format
 for i in {1..12}; do bcftools call -c -v ./results/SNP_calling/Filter_directly/sample$i_FILTERED_DIRECTLY.bcf > ./results/SNP_calling/Filter_directly/sample$i_FILTERED_DIRECTLY.vcf; done
 
+#Extract positions for snps
+mkdir ./results/SNP_calling/Filter_directly/SNP_positions
+for i in {1..12}; do cut -f 2 ./results/SNP_calling/Filter_directly/sample${i}_FILTER_DIRECTLY.vcf | sort > ./results/SNP_calling/Filter_directly/SNP_positions/sample$i.snp.pos; done
+
+cd SNP_positions
+
+#Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
+for file in *.snp.pos; do if [ $file != sample1.snp.pos ]; then comm -23 $file sample1.snp.pos > ${file/.snp.pos/.unique.snp.pos}; fi; done
+cd ..
+
 
 
 ######## ANNOVAR TESTING #######
