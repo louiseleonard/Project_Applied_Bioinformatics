@@ -188,11 +188,11 @@ cd ..
 
 # In the article, they found 85 unique SNPs. To see how many we found:
 # Concatenate all SNPs for sample 2,…,12. Then, sort them and filter out repeated lines.
-# This will result in all unique SNPs --> 71 unique SNPs
+# This will result in all unique SNPs --> 105 unique SNPs
 
 for i in {2..12}; do cat results/SNP_unique_positions/sample$i.unique.snp.pos; done | sort | uniq > results/SNP_unique_positions/all_unique_SNP_positions
 
-# Count rows to get number of unique SNPs, resulting in 71 unique positions.
+# Count rows to get number of unique SNPs, resulting in 105 unique positions.
 
 wc -l results/SNP_unique_positions/all_unique_SNP_positions
 
