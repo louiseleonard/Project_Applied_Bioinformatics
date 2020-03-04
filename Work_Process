@@ -239,7 +239,9 @@ for i in {1..12}; do samtools view sample$i.bam.wo.duplicates | wc -l; done #Nr 
 for file in *.bam.wo.duplicates; do samtools sort $file > ${file/.bam.wo.duplicates/.sorted.bam.wo.duplicates}; done
 for i in {1..12}; do samtools depth ./results/samfiles/sample$i.sorted.bam | awk '{sum+=$3} END {print "Average = ",sum/4411532}'; done
 
-
+# Convert BAM files into FASTQ to do fast quality control again
+# I did it for sample 12 after duplicated were removed
+samtools bam2fq results/samfiles/sample12.bam > data/sequencing_data/fastqc_files/sample12.wo.dup_fastqc.fastq
 
 
 
