@@ -136,7 +136,7 @@ cd ..
 mkdir SNP_calling
 cd ..
 
-for i in {1..12}; do samtools mpileup -g -f data/reference_sequence.fasta results/samfiles/sample$i.sorted.bam > results/SNP_callng/sample$i_variants.bcf; done
+for i in {1..12}; do samtools mpileup -g -f data/reference_sequence.fasta results/samfiles/sample$i.sorted.bam > results/SNP_calling/sample$i_variants.bcf; done
 
 # .bcf format into .vcf format
 for i in {1..12}; do bcftools call -c -v ./results/SNP_calling/sample$i_variants.bcf > ./results/SNP_calling/${file/.bcf/.vcf}; done
