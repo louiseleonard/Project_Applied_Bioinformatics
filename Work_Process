@@ -253,7 +253,7 @@ for i in {1..12}; do bcftools call -c -v ./results/SNP_calling/Filter_directly/s
 
 #Extract positions for snps
 mkdir ./results/SNP_calling/Filter_directly/SNP_positions
-for i in {1..2}; do tail -n +32 ./results/SNP_calling/Filter_directly/sample${i}_FILTER_DIRECTLY.vcf | cut -f 2 | sort > ./results/SNP_calling/Filter_directly/SNP_positions/sample$i.snp.pos; done
+for i in {1..12}; do tail -n +32 ./results/SNP_calling/Filter_directly/sample${i}_FILTER_DIRECTLY.vcf | cut -f 2 | sort > ./results/SNP_calling/Filter_directly/SNP_positions/sample$i.snp.pos; done
 cd SNP_positions
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
