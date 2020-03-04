@@ -257,7 +257,7 @@ for i in {1..2}; do tail -n +32 ./results/SNP_calling/Filter_directly/sample${i}
 cd SNP_positions
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
-for i in {2..12}; do comm -23 ./results/SNP_calling/Filter_directly/SNP_positions/sample$i.snp.pos ./results/SNP_calling/Filter_directly/SNP_positions/sample1.snp.pos > ./results/SNP_calling/Filter_directly/sample$i.UNIQUE.snp.pos; done
+for i in {2..12}; do comm -23 ./results/SNP_calling/Filter_directly/SNP_positions/sample$i.snp.pos ./results/SNP_calling/Filter_directly/SNP_positions/sample1.snp.pos > ./results/SNP_calling/Filter_directly/SNP_positions/sample$i.UNIQUE.snp.pos; done
 cd ..
 
 
