@@ -252,10 +252,10 @@ for i in {1..12}; do samtools mpileup -g -d400 -f data/reference_sequence.fasta 
 for i in {1..12}; do bcftools call -c -v ./results/SNP_calling/Filter_directly/sample${i}_FILTERED_DIRECTLY.bcf > ./results/SNP_calling/Filter_directly/sample${i}_FILTERED_DIRECTLY.vcf; done
 
 # Filter quality to minimum 10, store only these positions
-for i in {2..2}; do tail -n +33 ./results/SNP_calling/Filter_directly/sample${i}_FILTERED_DIRECTLY.vcf | awk -F"\t" 'NR==1||$6>10' | cut -f 2 | sort > ./results/SNP_calling/Filter_directly/sample${i}_FILTERED_DIRECTLY_QS; done
+for i in {1..12}; do tail -n +33 ./results/SNP_calling/Filter_directly/sample${i}_FILTERED_DIRECTLY.vcf | awk -F"\t" 'NR==1||$6>10' | cut -f 2 | sort > ./results/SNP_calling/Filter_directly/sample${i}_FILTERED_DIRECTLY_QS; done
 
 #Extract positions that are unique in the DCS-resistant samples (samples 2-12), compared to the WT sample (sample 1)
-for i in {2..2}; do comm -23 ./results/SNP_calling/Filter_directly/sample${i}_FILTERED_DIRECTLY_QS ./results/SNP_calling/Filter_directly/sample1_FILTERED_DIRECTLY_QS > ./results/SNP_calling/Filter_directly/SNP_positions/sample$i.UNIQUE.snp.pos; done
+for i in {2..12}; do comm -23 ./results/SNP_calling/Filter_directly/sample${i}_FILTERED_DIRECTLY_QS ./results/SNP_calling/Filter_directly/sample1_FILTERED_DIRECTLY_QS > ./results/SNP_calling/Filter_directly/SNP_positions/sample$i.UNIQUE.snp.pos; done
 
 ### Then look in the sample$i.UNIQUE.snp.pos file and see if the 11 postions are there, in that case mark green in document :)
 
