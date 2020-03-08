@@ -261,30 +261,3 @@ for i in {2..12}; do comm -23 ./results/SNP_calling/Filter_directly/sample${i}_F
 
 # Unique positions for the second attempt
 for i in {2..12}; do cat results/SNP_calling/Filter_directly/SNP_positions/sample$i.UNIQUE.snp.pos; done | sort | uniq > results/SNP_calling/Filter_directly/SNP_positions/all_unique_SNP_positions
-
-
-
-######## ANNOVAR
-# We retrieved dna and annotation files of M. tuberculosis H37 Rv from:
-# ftp://ftp.ensemblgenomes.org/pub/bacteria/release-46/fasta/bacteria_0_collection/mycobacterium_tuberculosis_h37rv/dna/
-# ftp://ftp.ensemblgenomes.org/pub/bacteria/release-46/gff3/bacteria_0_collection/mycobacterium_tuberculosis_h37rv
-
-# In directory ~/Project_Applied_Bioinformatics/annovar/annovar/tuberculosis
-
-wget ftp://ftp.ensemblgenomes.org/pub/bacteria/release-46/gff3/bacteria_0_collection/mycobacterium_tuberculosis_h37rv/Mycobacterium_tuberculosis_h37rv.ASM19595v2.46.chromosome.Chromosome.gff3.gz
-wget ftp://ftp.ensemblgenomes.org/pub/bacteria/release-46/gff3/bacteria_0_collection/mycobacterium_tuberculosis_h37rv/Mycobacterium_tuberculosis_h37rv.ASM19595v2.46.gff3.gz
-wget ftp://ftp.ensemblgenomes.org/pub/bacteria/release-46/fasta/bacteria_0_collection/mycobacterium_tuberculosis_h37rv/dna/Mycobacterium_tuberculosis_h37rv.ASM19595v2.dna.chromosome.Chromosome.fa.gz
-
-# do not forget to gunzip them
-
-# the programs gff3ToGenePred, annotate_variation.pl, coding_change.pl, convert2annovar.pl, retrieve_seq_from_fasta.pl
-# and table_annovar.pl must be located in the tuberculosis folder for the commands below.
-
-# Use the gff3ToGenePred tool to convert the GFF3 file to a GenePred file:
-./gff3ToGenePred tuberculosis/Mycobacterium_tuberculosis_h37rv.ASM19595v2.46.chromosome.Chromosome.gff3 MT_refGene.txt
-
-# Generate a transcript FASTA file with our provided script:
-perl ../retrieve_seq_from_fasta.pl --format refGene --seqfile Mycobacterium_tuberculosis_h37rv.ASM19595v2.dna.chromosome.Chromosome.fa MT_refGene.txt --out MT_refGeneMrna.fa
-
-perl table_annovar.pl <variant.vcf> MT/ --vcfinput --outfile final –buildver MT --protocol refGene --operation g
-####################################
